@@ -3,7 +3,6 @@ package com.example.spring_code.repository;
 
 import com.example.spring_code.domian.Todo;
 import lombok.extern.log4j.Log4j2;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -88,6 +87,11 @@ class TodoRepositoryTest {
         log.info(result.getTotalPages()); // 10
         result.getContent().forEach(log::info);
 
+    }
+
+    @Test
+    public void testSearch(){
+            todoRepository.search();
     }
 
 
