@@ -6,6 +6,11 @@ import com.example.spring_code.dto.TodoDTO;
 public interface TodoService {
     Long register(TodoDTO todoDTO);
 
+    void modify(TodoDTO todoDTO);
+
+    void remove(Long tno);
+
+
     TodoDTO get(Long tno);
 
     default TodoDTO entityToDTO(Todo todo){
