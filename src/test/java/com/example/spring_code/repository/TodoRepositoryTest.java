@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -27,6 +29,8 @@ class TodoRepositoryTest {
 
     // 이유 : 엔티티에 식별자가 존재하지 않는다면 save() 메소드는 바로 INSERT 쿼리를 실행한다.
         @Test
+        @Transactional
+        @Rollback(false)
         public void testInsert(){
 
         for(int i=1; i<=100; i++){
