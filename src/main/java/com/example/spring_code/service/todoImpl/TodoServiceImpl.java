@@ -1,6 +1,8 @@
 package com.example.spring_code.service.todoImpl;
 
 import com.example.spring_code.domian.Todo;
+import com.example.spring_code.dto.PageRequestDTO;
+import com.example.spring_code.dto.PageResponseDTO;
 import com.example.spring_code.dto.TodoDTO;
 import com.example.spring_code.repository.TodoRepository;
 import com.example.spring_code.service.todoInterface.TodoService;
@@ -41,6 +43,15 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public void remove(Long tno) {
         todoRepository.deleteById(tno);
+    }
+
+    @Override
+    public PageResponseDTO<TodoDTO> getList(PageRequestDTO pageRequestDTO) {
+
+
+
+
+        return null;
     }
 
     @Override

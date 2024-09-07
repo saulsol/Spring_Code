@@ -1,8 +1,12 @@
 package com.example.spring_code.service.todoInterface;
 
 import com.example.spring_code.domian.Todo;
+import com.example.spring_code.dto.PageRequestDTO;
+import com.example.spring_code.dto.PageResponseDTO;
 import com.example.spring_code.dto.TodoDTO;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public interface TodoService {
     Long register(TodoDTO todoDTO);
 
@@ -10,6 +14,7 @@ public interface TodoService {
 
     void remove(Long tno);
 
+    PageResponseDTO<TodoDTO> getList(PageRequestDTO pageRequestDTO);
 
     TodoDTO get(Long tno);
 
