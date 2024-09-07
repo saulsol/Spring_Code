@@ -41,7 +41,8 @@ public class PageResponseDTO<E> {
 
         this.prev = startPageNum > 1;
         this.next = total > (long) endPageNum * pageRequestDTO.getSize();
-        this.pageNumList = IntStream.range(startPageNum, endPageNum).boxed().collect(Collectors.toList());
+        this.pageNumList = IntStream.rangeClosed(startPageNum, endPageNum).boxed().collect(Collectors.toList());
+        this.totalPage = (int) total / pageRequestDTO.getSize() + 1;
         this.prevPage = prev ? startPageNum - 1 : 0;
         this.nextPage = next ? endPageNum + 1 : 0;
 
