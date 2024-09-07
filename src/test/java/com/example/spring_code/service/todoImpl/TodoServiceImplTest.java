@@ -1,6 +1,8 @@
 package com.example.spring_code.service.todoImpl;
 
 import com.example.spring_code.domian.Todo;
+import com.example.spring_code.dto.PageRequestDTO;
+import com.example.spring_code.dto.PageResponseDTO;
 import com.example.spring_code.dto.TodoDTO;
 import com.example.spring_code.repository.TodoRepository;
 import com.example.spring_code.service.todoInterface.TodoService;
@@ -43,6 +45,17 @@ class TodoServiceImplTest {
 
     @Test
     public void testModify(){}
+
+
+    @Test
+    public void testGetList(){
+        PageRequestDTO pageRequestDTO = PageRequestDTO
+                .builder()
+                .build();
+
+        PageResponseDTO<TodoDTO> responseDTO = todoService.getList(pageRequestDTO);
+        log.info(responseDTO);
+    }
 
 
 
