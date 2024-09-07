@@ -8,10 +8,13 @@ import com.example.spring_code.repository.TodoRepository;
 import com.example.spring_code.service.todoInterface.TodoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional; // SPRING @TRANSACTIONAL
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Log4j2
 @Service
@@ -48,10 +51,19 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public PageResponseDTO<TodoDTO> getList(PageRequestDTO pageRequestDTO) {
 
+        Page<Todo> result = todoRepository.search(pageRequestDTO);
+        List<TodoDTO> todoDTOList  = result
+                .get()
+                .map(todo -> entityToDTO(todo))
+                .toList();
 
+        PageResponseDTO<TodoDTO> responseDTO = PageResponseDTO.<TodoDTO>withAll()
+                .listDto(todoDTOList)
+                .pageRequestDTO(pageRequestDTO)
+                .total(result.getTotalElements())
+                .build();
 
-
-        return null;
+        return responseDTO;
     }
 
     @Override
