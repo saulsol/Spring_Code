@@ -35,4 +35,18 @@ public class TodoController {
         return ResponseEntity.ok().body(newMap);
     }
 
+    @PutMapping("/{tno}")
+    public ResponseEntity<?> modify(@PathVariable("tno") Long tno,
+                                    @RequestBody TodoDTO todoDTO){
+        todoDTO.setTno(tno);
+        todoService.modify(todoDTO);
+        return ResponseEntity.ok().body(Map.of("RESULT", "SUCCESS"));
+    }
+
+    @DeleteMapping("/{tno}")
+    public ResponseEntity<?> remove(@PathVariable("tno") Long tno){
+        todoService.remove(tno);
+        return ResponseEntity.ok().body(Map.of("RESULT", "SUCCESS"));
+    }
+
 }
