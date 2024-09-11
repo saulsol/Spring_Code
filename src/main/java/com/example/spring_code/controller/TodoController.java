@@ -8,6 +8,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @Log4j2
 @RequiredArgsConstructor
@@ -24,6 +26,13 @@ public class TodoController {
     @GetMapping("/list")
     public ResponseEntity<?> list(PageRequestDTO pageRequestDTO){
         return ResponseEntity.ok().body(todoService.getList(pageRequestDTO));
+    }
+
+    @PostMapping("/")
+    public ResponseEntity<?> register(@RequestBody TodoDTO todoDTO){
+        Long newTno = todoService.register(todoDTO);
+        Map<String, Long> newMap = Map.of("TNO", newTno);
+        return ResponseEntity.ok().body(newMap);
     }
 
 }
