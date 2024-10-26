@@ -36,7 +36,6 @@ public class PageResponseDTO<E> {
         // 최종 마지막 페이지 계산
         int lastPageNum = (int) Math.ceil(total / (double)pageRequestDTO.getSize());
 
-
         endPageNum = endPageNum > lastPageNum ? lastPageNum : endPageNum;
 
         this.prev = startPageNum > 1;
