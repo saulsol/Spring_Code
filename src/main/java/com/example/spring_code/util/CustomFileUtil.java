@@ -27,7 +27,7 @@ public class CustomFileUtil {
 
 
     // FILE 폴더를 만들어주려는 용도
-    // NginX로 서버를 분리하는 것을 권장
+    // 이미지 서버같은 경우 NginX로 서버를 분리하는 것을 권장
     @PostConstruct
     public void init(){
         File tempFolder = new File(uploadPath);
