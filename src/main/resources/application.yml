@@ -7,6 +7,7 @@ spring:
   servlet:
     multipart:
       maxRequestSize: 30MB
+      maxFileSize: 10MB
   jpa:
     defer-datasource-initialization: true
     hibernate.ddl-auto: validate
@@ -16,3 +17,7 @@ spring:
       hibernate.default_batch_fetch_size: 100
     sql.init.mode: alway
 
+
+saulSol:
+    file:
+      path: upload
