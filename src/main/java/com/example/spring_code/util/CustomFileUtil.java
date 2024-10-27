@@ -3,6 +3,8 @@ package com.example.spring_code.util;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import net.coobird.thumbnailator.Thumbnailator;
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -52,7 +54,17 @@ public class CustomFileUtil {
             Path savePath = Paths.get(uploadPath, savedName);
 
             try {
+                // 원본 파일 업로드
                 Files.copy(multipartFile.getInputStream(), savePath);
+
+                String contentType = multipartFile.getContentType(); // Mine Type
+
+                // 파일이 이미지인 경우 섬네일 이미지 제작
+                if(contentType != null || contentType.startsWith("image")){
+                    Path thumbnailPath = Paths.get(uploadPath, "s_"+savedName);
+                    Thumbnails.of(savePath.toFile()).size(200, 200).toFile(thumbnailPath.toFile());
+                }
+
                 uploadList.add(savedName);
             } catch (IOException e){
                 throw new RuntimeException(e);
