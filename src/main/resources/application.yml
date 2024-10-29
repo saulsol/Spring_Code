@@ -10,7 +10,7 @@ spring:
       maxFileSize: 10MB
   jpa:
     defer-datasource-initialization: true
-    hibernate.ddl-auto: create
+    hibernate.ddl-auto: validate
     show-sql: true
     properties:
       hibernate.format_sql: true

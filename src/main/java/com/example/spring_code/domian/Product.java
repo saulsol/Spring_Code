@@ -30,18 +30,23 @@ public class Product {
     @ElementCollection
     @Builder.Default
     private List<ProductImage> imageList = new ArrayList<>();
+    //@ElementCollection =>
+
 
     public void changeProductPrice(int productPrice){
         this.productPrice = productPrice;
     }
-    public void changeDesc(String productDescription){
+    public void changeProductDesc(String productDescription){
         this.productDescription = productDescription;
     }
-    public void changeName(String productName){
+    public void changeProductName(String productName){
         this.productName = productName;
     }
+    public void changeDelFlag(boolean delFlag){
+        this.delFlag = delFlag;
+    }
 
-    public void addProductImage(ProductImage productImage){
+    private void addProductImage(ProductImage productImage){
         productImage.setOrd(imageList.size());
         imageList.add(productImage);
     }
