@@ -30,7 +30,6 @@ public class Product {
     @ElementCollection
     @Builder.Default
     private List<ProductImage> imageList = new ArrayList<>();
-    //@ElementCollection =>
 
 
     public void changeProductPrice(int productPrice){

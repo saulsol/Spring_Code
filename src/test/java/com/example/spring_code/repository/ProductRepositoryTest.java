@@ -5,11 +5,15 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,16 +26,20 @@ class ProductRepositoryTest {
 
     @Test
     public void testInsert(){
-        Product product = Product.builder()
-                .productName("testProduct")
-                .productDescription("ex desc")
-                .productPrice(1000)
-                .build();
 
-        product.addProductImageByString(UUID.randomUUID() + "IMAGE1.jpg");
-        product.addProductImageByString(UUID.randomUUID() + "IMAGE2.jpg");
+        for(int i=0; i<10; i++ ){
+            Product product = Product.builder()
+                    .productName("testProduct")
+                    .productDescription("ex desc")
+                    .productPrice(1000)
+                    .build();
 
-        productRepository.save(product);
+            product.addProductImageByString(UUID.randomUUID() + "IMAGE1.jpg");
+            product.addProductImageByString(UUID.randomUUID() + "IMAGE2.jpg");
+
+            productRepository.save(product);
+        }
+
     }
 
     @Test
@@ -77,4 +85,10 @@ class ProductRepositoryTest {
 
     }
 
+    @Test
+    public void testList(){
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("pno").descending());
+        Page<Object[]> results = productRepository.selectList(pageable);
+        results.getContent().forEach(arr -> log.info(Arrays.toString(arr)));
+    }
 }
