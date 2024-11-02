@@ -1,6 +1,7 @@
 package com.example.spring_code.repository;
 
 import com.example.spring_code.domian.Product;
+import com.example.spring_code.repository.search.ProductSearch;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -11,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long>, ProductSearch {
 
     @EntityGraph(attributePaths = "imageList")
     @Query("SELECT p FROM Product p WHERE p.pno = :pno")

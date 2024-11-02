@@ -1,6 +1,9 @@
 package com.example.spring_code.repository;
 
 import com.example.spring_code.domian.Product;
+import com.example.spring_code.dto.PageRequestDTO;
+import com.example.spring_code.dto.PageResponseDTO;
+import com.example.spring_code.dto.ProductDTO;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,5 +93,12 @@ class ProductRepositoryTest {
         Pageable pageable = PageRequest.of(0, 10, Sort.by("pno").descending());
         Page<Object[]> results = productRepository.selectList(pageable);
         results.getContent().forEach(arr -> log.info(Arrays.toString(arr)));
+    }
+
+    @Test
+    public void testSearch(){
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder().build();
+        PageResponseDTO<ProductDTO> productDTOPageResponseDTO = productRepository.searchList(pageRequestDTO);
+        log.info(productDTOPageResponseDTO);
     }
 }
