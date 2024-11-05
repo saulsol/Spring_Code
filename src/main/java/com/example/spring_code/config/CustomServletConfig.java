@@ -22,7 +22,7 @@ public class CustomServletConfig implements WebMvcConfigurer {
         registry.addMapping("/**") // 모든 경로에 대한 허용
                 .maxAge(500)
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
-                .allowedOrigins("*");
+                .allowedOrigins("*");// 특정 도메인에 허용하는 로직
 
     }
 }

@@ -1,5 +1,6 @@
 package com.example.spring_code.domian;
 
+import com.example.spring_code.dto.ProductDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -61,7 +62,30 @@ public class Product {
         this.imageList.clear();
     }
 
+    public static Product dtoToEntity(ProductDTO productDTO){
 
+        Product newProduct = Product.builder()
+                .pno(productDTO.getPno())
+                .productName(productDTO.getProductName())
+                .productDescription(productDTO.getProductDescription())
+                .productPrice(productDTO.getProductPrice())
+                .build();
+
+        List<String> uploadFileNames = productDTO.getUploadedFileList(); // 이미 업로드가 끝난 파일 리스트
+
+        if(uploadFileNames == null || uploadFileNames.size() == 0) {
+            return newProduct;
+        }
+
+        uploadFileNames.forEach(
+                fileName -> {
+                    newProduct.addProductImageByString(fileName);
+                }
+        );
+
+
+        return newProduct;
+    }
 
 
 }
