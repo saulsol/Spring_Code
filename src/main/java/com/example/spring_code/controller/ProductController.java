@@ -95,5 +95,13 @@ public class ProductController {
         return ResponseEntity.ok().body(Map.of("RESULT", "SUCCESS"));
     }
 
+    @DeleteMapping("/{pno}")
+    public ResponseEntity<?> remove(@PathVariable(name = "pno" )Long pno){
+        List<String> uploadedFileList = productService.get(pno).getUploadedFileList();
+        productService.remove(pno);
+        customFileUtil.deleteFiles(uploadedFileList);
+        return ResponseEntity.ok().body(Map.of("RESULT", "SUCCESS"));
+    }
+
 
 }

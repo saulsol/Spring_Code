@@ -103,7 +103,7 @@ public class CustomFileUtil {
                 fileName -> {
                     String thumbImage = "s_" + fileName;
                     Path thumbnailFilePath = Paths.get(uploadPath, thumbImage);
-                    Path filePath = Paths.get(uploadPath, thumbImage);
+                    Path filePath = Paths.get(uploadPath, fileName);
 
                     try {
                         Files.deleteIfExists(thumbnailFilePath);
