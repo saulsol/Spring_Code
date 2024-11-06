@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @Log4j2
@@ -56,6 +57,43 @@ public class ProductController {
         return ResponseEntity.ok(productService.register(productDTO));
     }
 
+    @GetMapping("/{pno}")
+    public ResponseEntity<?> get(@PathVariable(name = "pno") Long pno){
+        return ResponseEntity.ok().body(productService.get(pno));
+    }
+
+    @PutMapping("/{pno}")
+    public ResponseEntity<?> modify(@PathVariable(name = "pno") Long pno, ProductDTO productDTO){
+
+        productDTO.setPno(pno);
+
+        ProductDTO old = productService.get(pno);
+        List<String> oldFileNames = old.getUploadedFileList();
+
+        // 새로 업로드해야 하는 파일
+        List<MultipartFile> newFiles = productDTO.getUploadFileList();
+        List<String> newFileNames = customFileUtil.saveFile(newFiles);
+        List<String> nonDeletedFileNames = productDTO.getUploadedFileList();
+
+        if(newFileNames != null && newFileNames.size() > 0){
+            nonDeletedFileNames.addAll(newFileNames);
+        }
+
+        // 수정
+        productService.modify(productDTO);
+        if(oldFileNames != null && oldFileNames.size() > 0){
+
+            //지워야 하는 파일 목록 찾기
+            //예전 파일들 중에서 지워져야 하는 파일이름들
+            List<String> removeFiles = oldFileNames
+                    .stream()
+                    .filter(fileName -> nonDeletedFileNames.indexOf(fileName) == -1).collect(Collectors.toList());
+
+            //실제 파일 삭제
+            customFileUtil.deleteFiles(removeFiles);
+        }
+        return ResponseEntity.ok().body(Map.of("RESULT", "SUCCESS"));
+    }
 
 
 }

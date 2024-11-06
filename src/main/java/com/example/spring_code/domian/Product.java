@@ -87,5 +87,30 @@ public class Product {
         return newProduct;
     }
 
+    public static ProductDTO entityToDto(Product product){
+        ProductDTO responseDto = ProductDTO.builder()
+                .pno(product.getPno())
+                .productName(product.getProductName())
+                .productDescription(product.getProductDescription())
+                .productPrice(product.getProductPrice())
+                .build();
+
+        List<ProductImage> productImageList = product.getImageList();
+
+        if(productImageList == null || productImageList.size() == 0){
+            return responseDto;
+        }
+
+        List<String> productFileNameList = productImageList.stream().map(
+                productImage -> productImage.getFileName()
+        ).toList();
+
+        responseDto.setUploadedFileList(productFileNameList);
+        return responseDto;
+    }
+
+
+
+
 
 }
