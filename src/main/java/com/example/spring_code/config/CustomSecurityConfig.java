@@ -1,10 +1,13 @@
 package com.example.spring_code.config;
 
+import com.example.spring_code.security.handler.APILoginFailHandler;
+import com.example.spring_code.security.handler.APILoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -31,6 +34,22 @@ public class CustomSecurityConfig {
         httpSecurity.csrf(
                 httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable()
         );
+
+        httpSecurity.sessionManagement(
+                httpSecuritySessionManagementConfigurer ->
+                        httpSecuritySessionManagementConfigurer
+                                .sessionCreationPolicy(SessionCreationPolicy.NEVER)
+        );
+
+        // 확인 테스트
+        httpSecurity.formLogin(
+                httpSecurityFormLoginConfigurer -> {
+                    httpSecurityFormLoginConfigurer.loginPage("/api/member/login"); // TEST
+                    httpSecurityFormLoginConfigurer.successHandler(new APILoginSuccessHandler());
+                    httpSecurityFormLoginConfigurer.failureHandler(new APILoginFailHandler());
+                }
+        );
+
 
         return httpSecurity.build();
     }
