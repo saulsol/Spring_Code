@@ -17,12 +17,16 @@ public class CustomServletConfig implements WebMvcConfigurer {
     }
 
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**") // 모든 경로에 대한 허용
-                .maxAge(500)
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
-                .allowedOrigins("*");// 특정 도메인에 허용하는 로직
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/**") // 모든 경로에 대한 허용
+//                .maxAge(500)
+//                .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
+//                .allowedOrigins("*");// 특정 도메인에 허용하는 로직
+//
+//    }
 
-    }
+
+    // 스프링 시큐리티 추가로 인한 주석 처리
+
 }

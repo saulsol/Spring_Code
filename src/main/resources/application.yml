@@ -21,3 +21,10 @@ spring:
 saulSol:
     file:
       path: upload
+
+logging:
+  level:
+    org:
+      springframwork:
+        security:
+          web: trace
