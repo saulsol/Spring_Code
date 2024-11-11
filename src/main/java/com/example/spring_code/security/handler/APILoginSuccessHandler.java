@@ -33,8 +33,8 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         MemberDTO memberDTO = (MemberDTO) authentication.getPrincipal();
         Map<String, Object> claims = memberDTO.getClaims();
 
-        claims.put("accessToken", jwtUtil.generateKey(claims, 10));
-        claims.put("refreshToken", jwtUtil.generateKey(claims, 60 * 24));
+        claims.put("accessToken", jwtUtil.generateKey(claims, 10)); // 10분
+        claims.put("refreshToken", jwtUtil.generateKey(claims, 60 * 24)); // 하루
 
         Gson gson = new Gson();
         String jsonStr = gson.toJson(claims);

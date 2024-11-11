@@ -1,5 +1,6 @@
 package com.example.spring_code.config;
 
+import com.example.spring_code.security.filter.JWTCheckFilter;
 import com.example.spring_code.security.handler.APILoginFailHandler;
 import com.example.spring_code.security.handler.APILoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
@@ -11,12 +12,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
-import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
@@ -26,6 +27,8 @@ public class CustomSecurityConfig {
     private final APILoginSuccessHandler apiLoginSuccessHandler;
 
     private final APILoginFailHandler apiLoginFailHandler;
+
+    private final JWTCheckFilter jwtCheckFilter;
 
 
     @Bean
@@ -54,6 +57,8 @@ public class CustomSecurityConfig {
                     httpSecurityFormLoginConfigurer.failureHandler(apiLoginFailHandler);
                 }
         );
+
+        httpSecurity.addFilterBefore(jwtCheckFilter, UsernamePasswordAuthenticationFilter.class);
 
 
         return httpSecurity.build();
