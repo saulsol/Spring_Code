@@ -23,6 +23,11 @@ import java.util.List;
 @Log4j2
 public class CustomSecurityConfig {
 
+    private final APILoginSuccessHandler apiLoginSuccessHandler;
+
+    private final APILoginFailHandler apiLoginFailHandler;
+
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
         log.info("--------security config---------");
@@ -45,8 +50,8 @@ public class CustomSecurityConfig {
         httpSecurity.formLogin(
                 httpSecurityFormLoginConfigurer -> {
                     httpSecurityFormLoginConfigurer.loginPage("/api/member/login"); // TEST
-                    httpSecurityFormLoginConfigurer.successHandler(new APILoginSuccessHandler());
-                    httpSecurityFormLoginConfigurer.failureHandler(new APILoginFailHandler());
+                    httpSecurityFormLoginConfigurer.successHandler(apiLoginSuccessHandler);
+                    httpSecurityFormLoginConfigurer.failureHandler(apiLoginFailHandler);
                 }
         );
 

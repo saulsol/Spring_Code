@@ -28,3 +28,7 @@ logging:
       springframwork:
         security:
           web: trace
+
+
+jwt:
+  key: ${JWT_KEY}
