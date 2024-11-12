@@ -45,12 +45,13 @@ public class ProductController {
     }
 
 
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')") // test
     @GetMapping("/list")
     public ResponseEntity<?> list(PageRequestDTO pageRequestDTO){
         return ResponseEntity.ok(productService.getList(pageRequestDTO));
     }
 
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')") // test
     @PostMapping("/register")
     public ResponseEntity<?> register(ProductDTO productDTO){
         List<MultipartFile> uploadFileList = productDTO.getUploadFileList();

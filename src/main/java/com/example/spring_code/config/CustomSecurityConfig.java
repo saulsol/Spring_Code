@@ -3,6 +3,7 @@ package com.example.spring_code.config;
 import com.example.spring_code.security.filter.JWTCheckFilter;
 import com.example.spring_code.security.handler.APILoginFailHandler;
 import com.example.spring_code.security.handler.APILoginSuccessHandler;
+import com.example.spring_code.security.handler.CustomAccessDenied;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
@@ -27,10 +28,9 @@ import java.util.Arrays;
 public class CustomSecurityConfig {
 
     private final APILoginSuccessHandler apiLoginSuccessHandler;
-
     private final APILoginFailHandler apiLoginFailHandler;
-
     private final JWTCheckFilter jwtCheckFilter;
+    private final CustomAccessDenied customAccessDenied;
 
 
     @Bean
@@ -61,6 +61,10 @@ public class CustomSecurityConfig {
         );
 
         httpSecurity.addFilterBefore(jwtCheckFilter, UsernamePasswordAuthenticationFilter.class);
+
+        httpSecurity.exceptionHandling(
+                httpSecurityExceptionHandlingConfigurer ->
+                        httpSecurityExceptionHandlingConfigurer.accessDeniedHandler(customAccessDenied));
 
 
         return httpSecurity.build();
