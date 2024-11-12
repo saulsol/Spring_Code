@@ -2,7 +2,6 @@ package com.example.spring_code.util;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +19,7 @@ public class JWTUtil {
     @Value("${jwt.key}")
     private String injectedKey;
 
-    public String generateKey(Map<String, Object> valueMap, int min){
+    public String generateToken(Map<String, Object> valueMap, int min){
 
         SecretKey key = null;
 
