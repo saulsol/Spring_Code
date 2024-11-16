@@ -18,7 +18,7 @@ public class JwtRefreshController {
 
     private final JWTUtil jwtUtil;
 
-    @RequestMapping("/api/member/register")
+    @RequestMapping("/api/member/refresh")
     public Map<String, Object> refresh(@RequestHeader("Authorization") String authHeader,
                                        String refreshToken){
 
@@ -32,19 +32,21 @@ public class JwtRefreshController {
 
         String accessToken = authHeader.substring(7);
 
-        if(checkExpiredToken(accessToken) == false){
+        if(!checkExpiredToken(accessToken)){ //  access 토큰이 만료되지 않은 경우
             return Map.of("accessToken", accessToken, "refreshToken", refreshToken);
         }
 
         // refresh 검증
         Map<String, Object> claims = jwtUtil.validateToken(refreshToken);
+
+
         String newAccessToken = jwtUtil.generateToken(claims, 10);
 
         String newRefreshToken = checkTime((Integer) claims.get("exp")) == true
                 ? jwtUtil.generateToken(claims, 60*24)
                 : refreshToken;
 
-        return Map.of("accessToken", accessToken, "refreshToken", refreshToken);
+        return Map.of("accessToken", newAccessToken, "refreshToken", newRefreshToken);
     }
 
 
@@ -68,7 +70,7 @@ public class JwtRefreshController {
         try {
             jwtUtil.validateToken(token);
         }catch (CustomJWTException e){
-            if(e.getMessage().equals("expired")){
+            if(e.getMessage().equals("Expired")){
                 return true;
             }
         }

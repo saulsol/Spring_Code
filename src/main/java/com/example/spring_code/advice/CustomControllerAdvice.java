@@ -1,5 +1,6 @@
 package com.example.spring_code.advice;
 
+import com.example.spring_code.util.CustomJWTException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -22,5 +23,10 @@ public class CustomControllerAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> nonExist(MethodArgumentNotValidException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("msg", e.getMessage()));
+    }
+
+    @ExceptionHandler(CustomJWTException.class)
+    public ResponseEntity<?> handleJWTException(CustomJWTException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", e.getMessage()));
     }
 }
