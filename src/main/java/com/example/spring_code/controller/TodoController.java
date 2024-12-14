@@ -6,6 +6,7 @@ import com.example.spring_code.service.todoInterface.TodoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -22,7 +23,7 @@ public class TodoController {
     public ResponseEntity<?> get(@PathVariable("tno") Long tno){
         return ResponseEntity.ok().body(todoService.get(tno));
     }
-
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     @GetMapping("/list")
     public ResponseEntity<?> list(PageRequestDTO pageRequestDTO){
         return ResponseEntity.ok().body(todoService.getList(pageRequestDTO));
