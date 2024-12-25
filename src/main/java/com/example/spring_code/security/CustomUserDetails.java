@@ -37,7 +37,7 @@ public class CustomUserDetails implements UserDetailsService {
                 member.isSocial(),
                 member.getMemberRoleList()
                         .stream()
-                        .map(memberRole -> memberRole.name()).collect(Collectors.toList())// Enun => String 변환
+                        .map(memberRole -> memberRole.name()).collect(Collectors.toList())// Enum => String 변환
         );
 
 

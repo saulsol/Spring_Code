@@ -25,11 +25,6 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        log.info("-------------------------");
-        log.info(authentication);
-        log.info("-------------------------");
-
-
         MemberDTO memberDTO = (MemberDTO) authentication.getPrincipal();
         Map<String, Object> claims = memberDTO.getClaims();
 
@@ -44,7 +39,5 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         printWriter.println(jsonStr);
         printWriter.close();
     }
-
-
 
 }

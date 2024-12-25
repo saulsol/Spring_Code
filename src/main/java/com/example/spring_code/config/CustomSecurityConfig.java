@@ -51,10 +51,10 @@ public class CustomSecurityConfig {
                                 .sessionCreationPolicy(SessionCreationPolicy.NEVER)
         );
 
-        // 확인 테스트
+        // 인증처리 파트
         httpSecurity.formLogin(
                 httpSecurityFormLoginConfigurer -> {
-                    httpSecurityFormLoginConfigurer.loginPage("/api/member/login"); // TEST
+                    httpSecurityFormLoginConfigurer.loginPage("/api/member/login");
                     httpSecurityFormLoginConfigurer.successHandler(apiLoginSuccessHandler);
                     httpSecurityFormLoginConfigurer.failureHandler(apiLoginFailHandler);
                 }

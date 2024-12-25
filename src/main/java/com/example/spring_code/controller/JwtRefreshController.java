@@ -22,6 +22,10 @@ public class JwtRefreshController {
     public Map<String, Object> refresh(@RequestHeader("Authorization") String authHeader,
                                        String refreshToken){
 
+        if(checkExpiredToken(refreshToken)){
+            throw new CustomJWTException("EXPIRED_REFRESH");
+        }
+
         if(refreshToken == null){
             throw new CustomJWTException("NULL_REFRESH");
         }
